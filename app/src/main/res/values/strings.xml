@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">DevMobileCroyMorin</string>
+    <string name="bottom_navigation_menu_services">Services</string>
+    <string name="bottom_navigation_menu_form">Formulaire</string>
+    <string name="bottom_navigation_menu_results">Resultats</string>
+    <string name="bottom_navigation_menu_dev">Devs</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
