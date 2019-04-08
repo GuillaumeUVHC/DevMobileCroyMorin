@@ -1,24 +1,11 @@
 package com.example.devmobilecroymorin
 
-import android.content.Intent
-import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v4.app.ServiceCompat
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.devmobilecroymorin.adapters.PageAdapter
-import com.example.devmobilecroymorin.adapters.ServiceAdapter
-import com.example.devmobilecroymorin.fragments.ServicesFragment
-import com.example.devmobilecroymorin.parser.Element
-import com.example.devmobilecroymorin.parser.JsonData
 import com.example.devmobilecroymorin.parser.Parser
-import com.example.devmobilecroymorin.parser.Service
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.service_fragment.*
-import kotlinx.serialization.json.Json
-import com.example.devmobilecroymorin.fragments.FormFragment
 
 
 class MainActivity : AppCompatActivity(){

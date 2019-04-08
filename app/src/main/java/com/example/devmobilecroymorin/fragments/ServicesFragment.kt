@@ -26,6 +26,7 @@ class ServicesFragment : Fragment() {
     var mContext : Context? = null
     var selectedItem : Int = 0
     lateinit var sharedViewModel : SharedViewModel
+    var servicesList : List<Service> = emptyList()
 
     fun newInstance(position : Int): ServicesFragment{
 
@@ -41,7 +42,7 @@ class ServicesFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        var servicesList : List<Service> = emptyList()
+
 
         activity?.let {
             sharedViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)

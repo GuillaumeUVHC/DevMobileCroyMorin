@@ -6,7 +6,8 @@
                                              tools:context=".fragments.ResultFragment">
 
     <TextView
-            android:text="DEVS"
+            android:text="Une réalisation de \nMORIN Valentin et CROY Guillaume"
+            android:textAlignment="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView3" app:layout_constraintTop_toTopOf="parent"
@@ -14,4 +15,17 @@
             android:layout_marginBottom="357dp" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="201dp" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="176dp"/>
+
+
+    <Button
+            android:id="@+id/btn_show_popup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Olive"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintHorizontal_bias="0.498" app:layout_constraintVertical_bias="0.581"/>
+
 </android.support.constraint.ConstraintLayout>
