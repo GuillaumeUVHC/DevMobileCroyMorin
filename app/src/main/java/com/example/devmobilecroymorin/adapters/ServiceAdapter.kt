@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.example.devmobilecroymorin.R
 import com.example.devmobilecroymorin.parser.Service
+import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 
 class ServiceAdapter(context: Context, var resource: Int, var services: ArrayList<Service>) :
@@ -30,10 +31,15 @@ class ServiceAdapter(context: Context, var resource: Int, var services: ArrayLis
 
         var imageView : ImageView = listService!!.findViewById<ImageView>(R.id.imageView_icon)
 
-        val p : Picasso = Picasso.get()
-        p.setIndicatorsEnabled(true)
 
-        Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(imageView)
+        val picasso = Picasso.Builder(context)
+            .listener { _, _, e -> e.printStackTrace() }
+            .build()
+        picasso.setIndicatorsEnabled(true)
+
+        var imageUrl : String = currentService.elements[0].value[0]
+
+        picasso.load(imageUrl).into(imageView)
 
         return listService
     }
