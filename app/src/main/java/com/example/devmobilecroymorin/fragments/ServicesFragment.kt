@@ -22,6 +22,7 @@ class ServicesFragment : Fragment() {
     val KEY_POSITION : String = "position"
     var jsonFile : String = ""
     var mContext : Context? = null
+    var selectedItem : Int = 0
 
     fun newInstance(position : Int): ServicesFragment{
 
@@ -49,13 +50,14 @@ class ServicesFragment : Fragment() {
         var sAdapter = ServiceAdapter(this.context!!, 0 , servicesList as ArrayList<Service>)
         list.adapter = sAdapter
 
+        Log.i("LISTENER", "HELLO")
 
         list.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
-                fun onItemClick(adapterView: AdapterView<*>, view1: View, i: Int, l: Long) {
-                    Log.i("LISTENER", "ON POS $i")
-                }
-            }
+
+                selectedItem = i
+                Log.i("LISTENER", "ON POS $selectedItem")
+    }
 
     }
 

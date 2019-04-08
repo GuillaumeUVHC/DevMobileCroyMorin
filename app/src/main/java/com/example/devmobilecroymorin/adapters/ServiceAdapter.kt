@@ -32,6 +32,7 @@ class ServiceAdapter(context: Context, var resource: Int, var services: ArrayLis
 
         val p : Picasso = Picasso.get()
         p.setIndicatorsEnabled(true)
+
         Picasso.get().load("http://i.imgur.com/DvpvklR.png").into(imageView)
 
         return listService
