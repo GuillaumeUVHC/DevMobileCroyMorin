@@ -18,6 +18,8 @@ import com.example.devmobilecroymorin.parser.Service
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.service_fragment.*
 import kotlinx.serialization.json.Json
+import com.example.devmobilecroymorin.fragments.FormFragment
+
 
 class MainActivity : AppCompatActivity(){
 
@@ -86,5 +88,6 @@ class MainActivity : AppCompatActivity(){
 
     /*override fun onFragmentInteraction(uri: Uri) {
     }*/
+
 
 }

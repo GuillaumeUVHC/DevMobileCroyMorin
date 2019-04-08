@@ -1,5 +1,6 @@
 package com.example.devmobilecroymorin.fragments
 
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
@@ -13,6 +14,7 @@ import com.example.devmobilecroymorin.R
 import com.example.devmobilecroymorin.adapters.ServiceAdapter
 import com.example.devmobilecroymorin.parser.JsonData
 import com.example.devmobilecroymorin.parser.Service
+import com.example.devmobilecroymorin.viewModel.SharedViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.service_fragment.*
 import kotlinx.serialization.json.Json
@@ -23,6 +25,7 @@ class ServicesFragment : Fragment() {
     var jsonFile : String = ""
     var mContext : Context? = null
     var selectedItem : Int = 0
+    lateinit var sharedViewModel : SharedViewModel
 
     fun newInstance(position : Int): ServicesFragment{
 
@@ -40,6 +43,10 @@ class ServicesFragment : Fragment() {
 
         var servicesList : List<Service> = emptyList()
 
+        activity?.let {
+            sharedViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
+        }
+
         val serviceList : ArrayList<Service> = ArrayList<Service>()
         if (mContext != null){
             jsonFile = mContext!!.assets.open("service.json").bufferedReader().readText()
@@ -56,6 +63,7 @@ class ServicesFragment : Fragment() {
             AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
 
                 selectedItem = i
+                sharedViewModel?.inputNumber?.postValue(i)
                 Log.i("LISTENER", "ON POS $selectedItem")
     }
 
@@ -73,12 +81,12 @@ class ServicesFragment : Fragment() {
     override fun onAttach(context: Context?) {
         super.onAttach(context)
         mContext = context
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
     }
-
 
 
 
