@@ -17,6 +17,7 @@ import android.widget.*
 import com.example.devmobilecroymorin.R
 import com.example.devmobilecroymorin.extendedFormView.ExtEditText
 import com.example.devmobilecroymorin.extendedFormView.ExtRadioGroup
+import com.example.devmobilecroymorin.extendedFormView.ExtSwitch
 import com.example.devmobilecroymorin.parser.Element
 import com.example.devmobilecroymorin.parser.JsonData
 import com.example.devmobilecroymorin.parser.Result
@@ -109,7 +110,7 @@ class FormFragment : Fragment() {
     }
 
     fun addSwitch(id : Int, value: String){
-        var switch : Switch = Switch(context)
+        var switch : ExtSwitch = ExtSwitch(value,context)
         switch.text = value
         scrollViewLayout.addView(switch)
     }
