@@ -104,7 +104,7 @@
 				{
 					"section": "abonnement",
 					"type": "radioGroup",
-					"value": ["3 mois", "6 mois", "1 an"],
+					"value": ["3 mois", "6 mois"],
 					"mandatory": "true"
 				},
 				{
