@@ -67,6 +67,8 @@ class FormFragment : Fragment() {
             servicesList = myJsonData.services
         }
 
+        updateForm()
+
         activity?.let {
             val sharedViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
 
@@ -198,14 +200,17 @@ class FormFragment : Fragment() {
 
         if (canSave) {
             val user: UserData = UserData(resultList)
+            var savedData : UserList = Parser().readUserList(context!!.externalCacheDir?.path + "myfile.txt")
+            savedData.userList.add(user)
 
-            Parser().saveUserList(UserList(arrayListOf(user)), context!!.externalCacheDir.path + "myfile.txt")
 
-            var recovered : UserList = Parser().readUserList(context!!.externalCacheDir.path + "myfile.txt")
+            Parser().saveUserList(savedData, context!!.externalCacheDir?.path + "myfile.txt")
+
+
 
 
             Log.i("SAVE", "Saving ...")
-            Log.i("SAVE", "SAVED $recovered")
+            //Log.i("SAVE", "SAVED $recovered")
         }else{
             Log.i("MANDATORY", "Un champ n'est pas rempli")
             Toast.makeText(context,"Un champ obligatoire n'est pas rempli",Toast.LENGTH_SHORT).show()

@@ -58,7 +58,7 @@ class ServicesFragment : Fragment() {
         var sAdapter = ServiceAdapter(this.context!!, 0 , servicesList as ArrayList<Service>)
         list.adapter = sAdapter
 
-        Log.i("LISTENER", "HELLO")
+        Log.i("LISTENER", "HELLOOOOO")
 
         list.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->

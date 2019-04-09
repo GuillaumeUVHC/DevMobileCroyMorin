@@ -25,7 +25,7 @@ class Parser() {
         return jsonData
     }
 
-    fun saveUserList(u : UserList, path : String){
+    fun saveUserList(u : UserList, path : String?){
         var file : File = File(path)
         var fileContents = ""
 
@@ -33,7 +33,7 @@ class Parser() {
         file.writeText(fileContents)
     }
 
-    fun readUserList(path : String) : UserList {
+    fun readUserList(path : String?) : UserList {
         var file: File = File(path)
         var fileContents = ""
         var u: UserList = UserList(arrayListOf())
