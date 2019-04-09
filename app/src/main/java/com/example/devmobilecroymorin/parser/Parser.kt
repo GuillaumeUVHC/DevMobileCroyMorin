@@ -5,6 +5,7 @@ import android.util.Log
 import kotlinx.serialization.json.JSON
 import kotlinx.serialization.json.Json
 import java.io.File
+import java.io.FileNotFoundException
 
 /* Classe permettante d'extraire les informations du service.json
 * */
@@ -38,9 +39,13 @@ class Parser() {
         var fileContents = ""
         var u: UserList = UserList(arrayListOf())
 
-        fileContents = file.readText()
-        if (!fileContents.isEmpty()) {
-            u = Json.parse(UserList.serializer(), fileContents)
+        try {
+            fileContents = file.readText()
+            if (!fileContents.isEmpty()) {
+                u = Json.parse(UserList.serializer(), fileContents)
+            }
+        }catch (e : FileNotFoundException){
+            Log.i("PARSER","Le fichier de log n'existe pas")
         }
 
         return u;
