@@ -15,14 +15,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.devmobilecroymorin.R
+import com.example.devmobilecroymorin.extendedFormView.ExtCheckBox
 import com.example.devmobilecroymorin.extendedFormView.ExtEditText
 import com.example.devmobilecroymorin.extendedFormView.ExtRadioGroup
 import com.example.devmobilecroymorin.extendedFormView.ExtSwitch
-import com.example.devmobilecroymorin.parser.Element
-import com.example.devmobilecroymorin.parser.JsonData
-import com.example.devmobilecroymorin.parser.Result
-import com.example.devmobilecroymorin.parser.Service
+import com.example.devmobilecroymorin.parser.*
 import com.example.devmobilecroymorin.viewModel.SharedViewModel
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.form_fragment.*
 import kotlinx.android.synthetic.main.form_fragment.view.*
 import kotlinx.android.synthetic.main.list_item.*
@@ -70,6 +69,8 @@ class FormFragment : Fragment() {
             servicesList = myJsonData.services
         }
 
+        updateForm()
+
         activity?.let {
             val sharedViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
 
@@ -82,15 +83,14 @@ class FormFragment : Fragment() {
         }
     }
 
-    fun addTextEdit(id : Int,value : String){
-        var textEdit : ExtEditText = ExtEditText(value, context)
+    fun addTextEdit(mandatory : Boolean,value : String){
+        var textEdit : ExtEditText = ExtEditText(mandatory, value , context)
         textEdit.hint = value
-        textEdit.id = id
         scrollViewLayout.addView(textEdit)
     }
 
-    fun addRadioGroup(id : Int, values : List<String>){
-        var radioGroup : ExtRadioGroup = ExtRadioGroup("RadioGroup",context)
+    fun addRadioGroup(mandatory : Boolean, values : List<String>){
+        var radioGroup : ExtRadioGroup = ExtRadioGroup(mandatory,"RadioGroup",context)
 
         values.forEach { v ->
             var radioButton : RadioButton = RadioButton(context)
@@ -98,7 +98,6 @@ class FormFragment : Fragment() {
             radioGroup.addView(radioButton)
         }
         radioGroup.orientation = LinearLayout.HORIZONTAL
-        radioGroup.id = id
         scrollViewLayout.addView(radioGroup)
     }
 
@@ -109,34 +108,35 @@ class FormFragment : Fragment() {
         scrollViewLayout.addView(label)
     }
 
-    fun addSwitch(id : Int, value: String){
-        var switch : ExtSwitch = ExtSwitch(value,context)
+    fun addSwitch(mandatory : Boolean, value: String){
+        var switch : ExtSwitch = ExtSwitch(mandatory, value,context)
         switch.text = value
         scrollViewLayout.addView(switch)
     }
 
-    fun addButton(id : Int, value: String){
-        var button : Button = Button(context)
+    fun addButton(mandatory : Boolean, value: String){
+        var button : ExtCheckBox = ExtCheckBox(mandatory, value, context)
         button.text = value
         scrollViewLayout.addView(button)
     }
 
-    fun addElement(id : Int, e : Element){
+    fun addElement(mandatory : Boolean, e : Element){
         when (e.type){
-            "edit" -> addTextEdit(id, e.value[0])
-            "radioGroup" -> addRadioGroup(id, e.value)
+            "edit" -> addTextEdit(mandatory, e.value[0])
+            "radioGroup" -> addRadioGroup(mandatory, e.value)
             "label" -> addLabel(e.value[0])
-            "switch" -> addSwitch(id, e.section)
-            "button" -> addButton(id, e.value[0])
+            "switch" -> addSwitch(mandatory, e.section)
+            "button" -> addButton(mandatory, e.value[0])
         }
     }
 
     fun updateForm(){
+        updateImage()
         scrollViewLayout.removeAllViews()
         elementsList = myJsonData.services[currentServiceIndex].elements
 
         elementsList.forEach {e ->
-            addElement(100, e)
+            addElement(e.mandatory.toBoolean(), e)
         }
         addSubmitButton()
     }
@@ -156,14 +156,20 @@ class FormFragment : Fragment() {
         var element: View
         var i: Int = 0
         var resultList : ArrayList<Result> = arrayListOf()
+        var canSave : Boolean = true
 
 
         while (i < scrollViewLayout.childCount) {
-            Log.i("SUBMIT", "child $i ${scrollViewLayout.getChildAt(i)}")
+            //Log.i("SUBMIT", "child $i ${scrollViewLayout.getChildAt(i)}")
 
             if(scrollViewLayout.getChildAt(i) is ExtEditText) {
                 var editText: ExtEditText = scrollViewLayout.getChildAt(i) as ExtEditText
-                resultList.add(Result(editText.title, editText.text.toString()))
+
+                if (mandatoryFilled(editText)){
+                    resultList.add(Result(editText.title, editText.text.toString()))
+                }else{
+                    canSave = false
+                }
             }
 
             if(scrollViewLayout.getChildAt(i) is ExtRadioGroup){
@@ -171,25 +177,84 @@ class FormFragment : Fragment() {
 
                 var radioButton : RadioButton? = scrollViewLayout.findViewById(radioGroup.checkedRadioButtonId)
 
-                if (radioButton != null) {
-                    resultList.add(Result("", radioButton.text as String))
+                if (radioButton == null && radioGroup.mandatory) {
+                    canSave = false
+                }else if (radioButton != null){
+                    resultList.add(Result(radioGroup.entry, radioButton.text as String))
                 }else{
-                    resultList.add(Result("", ""))
+                    resultList.add(Result(radioGroup.entry, "NO_DATA"))
                 }
 
             }
 
-            if(scrollViewLayout.getChildAt(i) is Switch){
-                var switch : Switch = scrollViewLayout.getChildAt(i) as Switch
-                resultList.add(Result(switch.text as String, switch.isChecked.toString()))
+            if(scrollViewLayout.getChildAt(i) is ExtSwitch){
+                var switch : ExtSwitch = scrollViewLayout.getChildAt(i) as ExtSwitch
+                resultList.add(Result(switch.entry, switch.isChecked.toString()))
+            }
+
+            if(scrollViewLayout.getChildAt(i) is ExtCheckBox){
+                var cBox : ExtCheckBox = scrollViewLayout.getChildAt(i) as ExtCheckBox
+                resultList.add(Result(cBox.entry, cBox.isChecked.toString()))
             }
 
             i++
         }
 
+        if (canSave) {
+            val user: UserData = UserData(resultList)
+            //save
+            Log.i("MANDATORY", "Saving ...")
+        }else{
+            Log.i("MANDATORY", "Un champ n'est pas rempli")
+            Toast.makeText(context,"Un champ obligatoire n'est pas rempli",Toast.LENGTH_SHORT).show()
+        }
+
+
         Log.i("Results", resultList.toString())
 
     }
 
+    fun saveUser(){
 
+    }
+
+    fun updateImage(){
+        val picasso = Picasso.Builder(context!!)
+            .listener { _, _, e -> e.printStackTrace() }
+            .build()
+        picasso.setIndicatorsEnabled(true)
+
+        var imageUrl : String = servicesList[currentServiceIndex].elements[0].value[0]
+
+        picasso.load(imageUrl).into(imageView)
+    }
+
+    fun mandatoryFilled(view : View) : Boolean{
+        if(view is ExtEditText) {
+            if (view.mandatory){
+                return !(view.text.isBlank())
+            }else{
+                return true
+            }
+        }
+
+        if(view is ExtRadioGroup){
+            if (view.mandatory){
+                return (view.checkedRadioButtonId != null)
+            }else{
+                return true
+            }
+
+        }
+
+        if(view is ExtSwitch){
+            return true
+        }
+
+        if(view is ExtCheckBox){
+            return true
+        }
+
+        return false
+    }
 }

@@ -11,4 +11,8 @@ class Parser() {
         return Json.parse(JsonData.serializer(), fileContent)
 
     }
+
+    fun saveUser(userData: UserData){
+
+    }
 }
