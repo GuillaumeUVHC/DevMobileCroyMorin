@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.devmobilecroymorin.R
+import com.example.devmobilecroymorin.parser.Parser
+import com.example.devmobilecroymorin.parser.UserList
 
 class ResultFragment : Fragment() {
 
     val KEY_POSITION : String = "position"
     var jsonFile : String = ""
     var mContext : Context? = null
+    lateinit var resultList : UserList
 
     fun newInstance(position : Int): ResultFragment{
 
@@ -21,6 +24,8 @@ class ResultFragment : Fragment() {
         val args : Bundle = Bundle()
         args.putInt(KEY_POSITION, position)
         sf.arguments = args
+
+        //resultList = Parser().readUserList(context!!.externalCacheDir.path + "myfile.txt")
 
         return sf
     }

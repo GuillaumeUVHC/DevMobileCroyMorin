@@ -23,10 +23,8 @@ import com.example.devmobilecroymorin.parser.*
 import com.example.devmobilecroymorin.viewModel.SharedViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.form_fragment.*
-import kotlinx.android.synthetic.main.form_fragment.view.*
-import kotlinx.android.synthetic.main.list_item.*
 import kotlinx.serialization.json.Json
-import org.json.JSONStringer
+import java.io.*
 
 
 class FormFragment : Fragment() {
@@ -68,8 +66,6 @@ class FormFragment : Fragment() {
             myJsonData = Json.parse(JsonData.serializer(), jsonFile)
             servicesList = myJsonData.services
         }
-
-        updateForm()
 
         activity?.let {
             val sharedViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
@@ -202,8 +198,14 @@ class FormFragment : Fragment() {
 
         if (canSave) {
             val user: UserData = UserData(resultList)
-            //save
-            Log.i("MANDATORY", "Saving ...")
+
+            Parser().saveUserList(UserList(arrayListOf(user)), context!!.externalCacheDir.path + "myfile.txt")
+
+            var recovered : UserList = Parser().readUserList(context!!.externalCacheDir.path + "myfile.txt")
+
+
+            Log.i("SAVE", "Saving ...")
+            Log.i("SAVE", "SAVED $recovered")
         }else{
             Log.i("MANDATORY", "Un champ n'est pas rempli")
             Toast.makeText(context,"Un champ obligatoire n'est pas rempli",Toast.LENGTH_SHORT).show()
@@ -214,9 +216,27 @@ class FormFragment : Fragment() {
 
     }
 
-    fun saveUser(){
+    /*fun saveUser(userData: UserData){
 
-    }
+        val filepath = "testFile.tmp"
+
+        val fileIn = FileInputStream(filepath)
+        val objectIn = ObjectInputStream(fileIn)
+
+        var u : ArrayList<UserData> = objectIn.readObject() as ArrayList<UserData>
+
+        var toSave : ArrayList<UserData> = arrayListOf()
+
+        if (!u.isEmpty()){
+            toSave = u;
+        }
+
+        u.add(userData)
+
+        val fos = FileOutputStream(filepath)
+        val oos = ObjectOutputStream(fos)
+
+    }*/
 
     fun updateImage(){
         val picasso = Picasso.Builder(context!!)

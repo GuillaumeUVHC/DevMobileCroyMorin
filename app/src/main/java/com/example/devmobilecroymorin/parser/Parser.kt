@@ -1,6 +1,10 @@
 package com.example.devmobilecroymorin.parser
 
+import android.content.Context
+import android.util.Log
+import kotlinx.serialization.json.JSON
 import kotlinx.serialization.json.Json
+import java.io.File
 
 /* Classe permettante d'extraire les informations du service.json
 * */
@@ -12,7 +16,34 @@ class Parser() {
 
     }
 
-    fun saveUser(userData: UserData){
+    fun jsonUserList(u : UserList) : String{
 
+        var test : List<Int> = listOf(1,2,3)
+
+        var jsonData = Json.stringify(UserList.serializer(), u)
+        Log.i("SAVE", jsonData)
+        return jsonData
     }
+
+    fun saveUserList(u : UserList, path : String){
+        var file : File = File(path)
+        var fileContents = ""
+
+        fileContents = Parser().jsonUserList(u)
+        file.writeText(fileContents)
+    }
+
+    fun readUserList(path : String) : UserList {
+        var file: File = File(path)
+        var fileContents = ""
+        var u: UserList = UserList(arrayListOf())
+
+        fileContents = file.readText()
+        if (!fileContents.isEmpty()) {
+            u = Json.parse(UserList.serializer(), fileContents)
+        }
+
+        return u;
+    }
+
 }

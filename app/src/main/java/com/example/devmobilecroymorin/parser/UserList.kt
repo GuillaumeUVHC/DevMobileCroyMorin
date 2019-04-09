@@ -3,5 +3,4 @@ package com.example.devmobilecroymorin.parser
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Result(val entry : String, val value: String){
-}
+data class UserList(var userList: ArrayList<UserData>)
