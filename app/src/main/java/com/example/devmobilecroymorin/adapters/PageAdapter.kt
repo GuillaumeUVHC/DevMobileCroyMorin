@@ -25,5 +25,16 @@ class PageAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
     }
 
+    override fun getPageTitle(position: Int): CharSequence? {
+        when (position) {
+            0 -> return "Services"
+            1 -> return "Formulaire"
+            2 -> return "Resultats"
+            3 -> return "Devs"
+        }
+
+        return ""
+    }
+
 
 }

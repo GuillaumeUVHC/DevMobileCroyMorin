@@ -156,8 +156,11 @@ class FormFragment : Fragment() {
         var resultList : ArrayList<Result> = arrayListOf()
         var canSave : Boolean = true
 
+        resultList.add(Result("Service", servicesList[currentServiceIndex].title))
+
 
         while (i < scrollViewLayout.childCount) {
+
             //Log.i("SUBMIT", "child $i ${scrollViewLayout.getChildAt(i)}")
 
             if(scrollViewLayout.getChildAt(i) is ExtEditText) {

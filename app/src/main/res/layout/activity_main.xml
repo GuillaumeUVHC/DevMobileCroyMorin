@@ -6,10 +6,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
+
+    <!-- 1 | Add TabLayout to handle tabs -->
+    <android.support.design.widget.TabLayout
+            android:id="@+id/activity_main_tabs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#B6C9F1"
+            app:tabPadding="0dp"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
+            app:tabTextColor="#D4E0F8"
+            app:tabSelectedTextColor="#fff" tools:layout_editor_absoluteX="0dp"
+            app:layout_constraintTop_toTopOf="parent"/>
+
     <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
-            android:layout_height="715dp" app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginTop="32dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:id="@+id/view_pager"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:id="@+id/view_pager"
+            app:layout_constraintTop_toBottomOf="@+id/activity_main_tabs"/>
 </android.support.constraint.ConstraintLayout>

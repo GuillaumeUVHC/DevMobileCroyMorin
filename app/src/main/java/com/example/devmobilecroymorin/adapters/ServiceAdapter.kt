@@ -39,7 +39,7 @@ class ServiceAdapter(context: Context, var resource: Int, var services: ArrayLis
 
         var imageUrl : String = currentService.elements[0].value[0]
 
-        picasso.load(imageUrl).into(imageView)
+        picasso.load(imageUrl).fit().into(imageView)
 
         return listService
     }

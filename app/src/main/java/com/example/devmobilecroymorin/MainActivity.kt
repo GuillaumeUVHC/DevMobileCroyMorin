@@ -1,14 +1,21 @@
 package com.example.devmobilecroymorin
 
 import android.os.Bundle
+import android.support.design.widget.TabLayout
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import com.example.devmobilecroymorin.adapters.PageAdapter
 import com.example.devmobilecroymorin.parser.Parser
 import kotlinx.android.synthetic.main.activity_main.*
+import com.example.devmobilecroymorin.R
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 
 
 class MainActivity : AppCompatActivity(){
+
+    lateinit var m : Menu
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,10 +77,28 @@ class MainActivity : AppCompatActivity(){
 
     fun configureViewPager(){
         view_pager.adapter = PageAdapter(supportFragmentManager)
+        activity_main_tabs.setupWithViewPager(view_pager)
+        activity_main_tabs.tabMode = TabLayout.MODE_SCROLLABLE
     }
 
-    /*override fun onFragmentInteraction(uri: Uri) {
-    }*/
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+        val inflater = menuInflater
+        //R.menu.menu est l'id de notre menu
+        m = menu
+        inflater.inflate(R.menu.pop_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.getItemId()) {
+            R.id.hw_info -> {
+                //Dans le Menu "m", on active tous les items dans le groupe d'identifiant "R.id.group2"
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 
 }
