@@ -7,10 +7,12 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.devmobilecroymorin.R
 import kotlinx.android.synthetic.main.dev_fragment.*
-import kotlinx.android.synthetic.main.dev_fragment.view.*
+import android.widget.Button
 import kotlinx.android.synthetic.main.popup.view.*
+
 
 class DevFragment : Fragment() {
 
@@ -37,20 +39,21 @@ class DevFragment : Fragment() {
             val mDialogView = LayoutInflater.from(mContext).inflate(R.layout.popup, null)
             val mBuilder = AlertDialog.Builder(mContext)
                 .setView(mDialogView)
-                .setTitle("OLIVE")
+                .setTitle("Humour")
+
+            val popupText = mDialogView.findViewById<TextView>(R.id.popup_text)
+            popupText.text = "BON CHANCE"       // Petite ref au sujet parce que ça m'avait bien fait rire.
+            val popupButton = mDialogView.findViewById<Button>(R.id.btn_validation)
+            popupButton.text = "Mettre 18 :)"   // 18 parce que demander 20 ce serait forcer quoi !
 
             val mAlertDialog = mBuilder.show()
 
-            mDialogView.btn_olive.setOnClickListener {
+            mDialogView.btn_validation.setOnClickListener {
                 mAlertDialog.dismiss()
             }
 
         }
 
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
     }
 
     override fun onAttach(context: Context?) {
@@ -61,4 +64,5 @@ class DevFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.dev_fragment, null)
             }
+
 }
