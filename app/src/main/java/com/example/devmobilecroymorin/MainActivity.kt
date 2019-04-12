@@ -26,71 +26,22 @@ class MainActivity : AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //Instantiate parser
-        val myParser = Parser()
-        //Parse Json file from assets
-        val myJsonFile : String = assets.open("service.json").bufferedReader().readText()
-        //val myJsonData : JsonData = Json.parse(JsonData.serializer(), myJsonFile)
 
-        //Log.i("DATA", myJsonData.toString())
-
-        //Add bottomNavigation
-        //this.configBottomNaviagtionMenu()
-
-        //Adding services list to bundle
-        //val bundle : Bundle = Bundle()
-        //bundle.putString("jsonFile", myJsonFile)
-
-        //Add ServiceFragment to view
-        /*var ft : FragmentTransaction = supportFragmentManager.beginTransaction()
-        var sf : ServicesFragment = ServicesFragment()
-        //Passing bundle to fragment
-        sf.arguments = bundle
-        ft.add(R.id.fragment_container, sf)
-        ft.commit()*/
-
-        //Send Json
-
+        //Configuation du viewPager
         configureViewPager()
     }
 
-    /*
-    CONFIG
-     */
-
-    /*fun configBottomNaviagtionMenu(){
-        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem -> updateMainFragment(menuItem.itemId) }
-    }*/
-
-    fun updateMainFragment(itemId : Int) : Boolean {
-
-        when (itemId){
-            R.id.action_services -> showServices()
-            R.id.action_form -> showForm()
-            else -> Log.i("WHEN", "ELSE")
-        }
-
-        return true
-    }
-
-    fun showServices(){
-
-    }
-
-    fun showForm(){
-        Log.i("WHEN", "Showing form")
-    }
-
     fun configureViewPager(){
+        //Le view Pager permet de naviguer entre les différentes pages de notre application
         view_pager.adapter = PageAdapter(supportFragmentManager)
         activity_main_tabs.setupWithViewPager(view_pager)
         activity_main_tabs.tabMode = TabLayout.MODE_SCROLLABLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        //Menu de la action ar comportant le bouton "?"
         super.onCreateOptionsMenu(menu)
         val inflater = menuInflater
-        //R.menu.menu est l'id de notre menu
         m = menu
         inflater.inflate(R.menu.pop_menu, menu)
         return true

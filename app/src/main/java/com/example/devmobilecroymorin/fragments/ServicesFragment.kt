@@ -41,31 +41,27 @@ class ServicesFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-
-
+        //recupération du shared viewModel pour faire passer des infos d'un fragment à un autre
         activity?.let {
             sharedViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
         }
 
-        val serviceList : ArrayList<Service> = ArrayList<Service>()
+        //Recuperation et parse de la liste des services depuis le fichier service.json
         if (mContext != null){
             jsonFile = mContext!!.assets.open("service.json").bufferedReader().readText()
             val myJsonData : JsonData = Json.parse(JsonData.serializer(), jsonFile)
             servicesList = myJsonData.services
         }
 
+        //L'adapteur permet d'afficher la liste des services
         var sAdapter = ServiceAdapter(this.context!!, 0 , servicesList as ArrayList<Service>)
         list.adapter = sAdapter
 
-        Log.i("LISTENER", "HELLOOOOO")
-
+        //On place un listener pour mettre à jour le service selectionné dans le shared viewModel
         list.onItemClickListener =
             AdapterView.OnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
-
                 selectedItem = i
                 sharedViewModel?.inputNumber?.postValue(i)
-                Log.i("LISTENER", "ON POS $selectedItem")
     }
 
     }
@@ -88,7 +84,4 @@ class ServicesFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
     }
-
-
-
 }

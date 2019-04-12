@@ -61,6 +61,7 @@ class FormFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        //Recupération des des services
         if (mContext != null) {
             jsonFile = mContext!!.assets.open("service.json").bufferedReader().readText()
             myJsonData = Json.parse(JsonData.serializer(), jsonFile)
@@ -72,6 +73,7 @@ class FormFragment : Fragment() {
         activity?.let {
             val sharedViewModel = ViewModelProviders.of(it).get(SharedViewModel::class.java)
 
+            //Recuperation depuis le shared viewModel de l'indice du service selectionné
             sharedViewModel.inputNumber.observe(this, Observer {
                 it?.let {
                     currentServiceIndex = it
@@ -81,12 +83,14 @@ class FormFragment : Fragment() {
         }
     }
 
+    //Ajout d'un champs de saisie texte
     fun addTextEdit(mandatory : Boolean,value : String){
         var textEdit : ExtEditText = ExtEditText(mandatory, value , context)
         textEdit.hint = value
         scrollViewLayout.addView(textEdit)
     }
 
+    //Ajout d'un radio group et de ses radio buttons
     fun addRadioGroup(mandatory : Boolean, values : List<String>){
         var radioGroup : ExtRadioGroup = ExtRadioGroup(mandatory,"RadioGroup",context)
 
@@ -99,6 +103,7 @@ class FormFragment : Fragment() {
         scrollViewLayout.addView(radioGroup)
     }
 
+    //Ajout d'un Label
     fun addLabel(value : String){
         var label : TextView = TextView(context)
         label.text = "$value :"
@@ -106,18 +111,21 @@ class FormFragment : Fragment() {
         scrollViewLayout.addView(label)
     }
 
+    //Ajout d'un switch
     fun addSwitch(mandatory : Boolean, value: String){
         var switch : ExtSwitch = ExtSwitch(mandatory, value,context)
         switch.text = value
         scrollViewLayout.addView(switch)
     }
 
+    //ajout d'un button (checkbox)
     fun addButton(mandatory : Boolean, value: String){
         var button : ExtCheckBox = ExtCheckBox(mandatory, value, context)
         button.text = value
         scrollViewLayout.addView(button)
     }
 
+    //ajout d'un elément en fonction de son type précisé dans le service.json
     fun addElement(mandatory : Boolean, e : Element){
         when (e.type){
             "edit" -> addTextEdit(mandatory, e.value[0])
@@ -128,6 +136,7 @@ class FormFragment : Fragment() {
         }
     }
 
+    //création de tous les champs du formulaire du service
     fun updateForm(){
         updateImage()
         scrollViewLayout.removeAllViews()
@@ -139,17 +148,17 @@ class FormFragment : Fragment() {
         addSubmitButton()
     }
 
+    //Ajout du bouton de validation + listener
     fun addSubmitButton(){
         val button : Button = Button(context)
         button.text ="S'inscrire"
         button.setOnClickListener {
-            Log.i("SUBMIT", "COUCOU")
             saveUserData()
         }
         scrollViewLayout.addView(button)
-
     }
 
+    //sauvegarde d'un utilsiateur (infos de champs)
     fun saveUserData() {
         var element: View
         var i: Int = 0
@@ -210,43 +219,14 @@ class FormFragment : Fragment() {
             Parser().saveUserList(savedData, context!!.externalCacheDir?.path + "myfile.txt")
 
 
-
-
-            Log.i("SAVE", "Saving ...")
-            //Log.i("SAVE", "SAVED $recovered")
         }else{
-            Log.i("MANDATORY", "Un champ n'est pas rempli")
             Toast.makeText(context,"Un champ obligatoire n'est pas rempli",Toast.LENGTH_SHORT).show()
         }
 
-
-        Log.i("Results", resultList.toString())
-
     }
 
-    /*fun saveUser(userData: UserData){
-
-        val filepath = "testFile.tmp"
-
-        val fileIn = FileInputStream(filepath)
-        val objectIn = ObjectInputStream(fileIn)
-
-        var u : ArrayList<UserData> = objectIn.readObject() as ArrayList<UserData>
-
-        var toSave : ArrayList<UserData> = arrayListOf()
-
-        if (!u.isEmpty()){
-            toSave = u;
-        }
-
-        u.add(userData)
-
-        val fos = FileOutputStream(filepath)
-        val oos = ObjectOutputStream(fos)
-
-    }*/
-
     fun updateImage(){
+        //Affichage de l'image en haut du formulaire grâce à picasso
         val picasso = Picasso.Builder(context!!)
             .listener { _, _, e -> e.printStackTrace() }
             .build()
@@ -257,6 +237,7 @@ class FormFragment : Fragment() {
         picasso.load(imageUrl).into(imageView)
     }
 
+    //Verification que le champs en parametre est rempli si il est obligatoire
     fun mandatoryFilled(view : View) : Boolean{
         if(view is ExtEditText) {
             if (view.mandatory){

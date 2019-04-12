@@ -11,22 +11,20 @@ import java.io.FileNotFoundException
 * */
 class Parser() {
 
+    //Deprecated
     fun parseJSON(fileContent: String) : JsonData {
-
         return Json.parse(JsonData.serializer(), fileContent)
-
     }
 
+
     fun jsonUserList(u : UserList) : String{
-
-        var test : List<Int> = listOf(1,2,3)
-
+        //Mettre la liste des users sous forme de JSON pour l'enregistrer
         var jsonData = Json.stringify(UserList.serializer(), u)
-        Log.i("SAVE", jsonData)
         return jsonData
     }
 
     fun saveUserList(u : UserList, path : String?){
+        //Ecriture dans le fichier
         var file : File = File(path)
         var fileContents = ""
 
@@ -35,6 +33,7 @@ class Parser() {
     }
 
     fun readUserList(path : String?) : UserList {
+        //Lecture des users sauvagardés
         var file: File = File(path)
         var fileContents = ""
         var u: UserList = UserList(arrayListOf())
@@ -48,7 +47,7 @@ class Parser() {
             Log.i("PARSER","Le fichier de log n'existe pas")
         }
 
-        return u;
+        return u
     }
 
 }

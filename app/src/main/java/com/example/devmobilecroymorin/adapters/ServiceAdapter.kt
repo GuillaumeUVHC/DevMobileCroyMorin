@@ -15,7 +15,7 @@ import com.squareup.picasso.Picasso
 class ServiceAdapter(context: Context, var resource: Int, var services: ArrayList<Service>) :
     ArrayAdapter<Service>(context, resource, services) {
 
-
+    //Alimentation de la vue affichant les services
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
 
         var listService : View? = convertView
@@ -24,8 +24,10 @@ class ServiceAdapter(context: Context, var resource: Int, var services: ArrayLis
             listService = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false);
         }
 
+        //recuperation de chaque service
         val currentService : Service = services[position]
 
+        //Titre du service + Image associée
         var textView = listService!!.findViewById<TextView>(R.id.textView_name)
         textView.text = currentService.title
 

@@ -10,6 +10,7 @@ import com.example.devmobilecroymorin.fragments.ServicesFragment
 
 class PageAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
+    //Gestion de l'affichage des vues par le view pager
     override fun getCount(): Int {
         return 4
     }
@@ -25,6 +26,7 @@ class PageAdapter(fm: FragmentManager?) : FragmentPagerAdapter(fm) {
 
     }
 
+    //Gestion des onglets
     override fun getPageTitle(position: Int): CharSequence? {
         when (position) {
             0 -> return "Services"

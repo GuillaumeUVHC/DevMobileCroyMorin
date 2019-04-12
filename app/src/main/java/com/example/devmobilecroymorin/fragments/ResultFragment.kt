@@ -46,8 +46,8 @@ class ResultFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        //On recuepere la liste des utilisateurs dans le fichier de sauvegarde pour l'afficher avec un adapteur
         resultList = Parser().readUserList(context!!.externalCacheDir?.path + "myfile.txt")
-        Log.i("CREATED", "RESULT")
 
         var uAdapter = userDataAdapter(this.context!!, 0 , resultList.userList )
         list.adapter = uAdapter

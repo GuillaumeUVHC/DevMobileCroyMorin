@@ -15,6 +15,7 @@ class userDataAdapter(context: Context, var resource: Int, var userDatas: ArrayL
 
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+        //Alimentation de la vue listant les ustilisateurs
 
         var userDataList : View? = convertView
 
