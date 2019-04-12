@@ -10,7 +10,7 @@
 2. Pour profiter au maximum de l'application il faut savoir que :
    1. L'application nécessite une connexion internet pour charger les images à afficher
    2. Lors d'un clic sur un service dans la liste, pour afficher le formulaire correspondant il suffit de glisser vers la droite
-   3. Lorsqu'un utilisateur s'inscris pour mettre à jour la liste des utilisateurs inscrits il faut revenir sur la page service pour que le fragment de résultats se rafraichisse (spec android) 
+   3. Lorsqu'un utilisateur s'inscrit pour mettre à jour la liste des utilisateurs inscrits il faut revenir sur la page service pour que le fragment de résultats se rafraichisse (spec android) 
 
 
 
